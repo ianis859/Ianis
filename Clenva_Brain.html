@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Clenva Brain — Baza de Cunoștințe</title>
+    <style>
+        body { background:#0a0a0f; color:#f0f0f4; font-family:'Segoe UI'; padding:20px; }
+        h1 { color:#d97757; }
+        pre { background:#1a1a22; padding:15px; border-radius:10px; overflow-x:auto; white-space:pre-wrap; }
+        button { background:#d97757; color:#fff; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; margin-bottom:10px; }
+    </style>
+</head>
+<body>
+    <h1>⭐ Clenva Brain — Baza de Cunoștințe</h1>
+    <p>Tot ce învață AI-ul se salvează pe server.</p>
+    <button onclick="loadBrain()">🔄 Reîncarcă</button>
+    <button onclick="clearBrain()">🗑️ Șterge tot</button>
+    <pre id="brainDisplay">Se încarcă...</pre>
+    <script>
+        async function loadBrain() {
+            const response = await fetch('/api/brain');
+            const data = await response.json();
+            document.getElementById('brainDisplay').textContent = JSON.stringify(data, null, 2);
+        }
+        async function clearBrain() {
+            await fetch('/api/brain', { method: 'DELETE' });
+            loadBrain();
+        }
+        loadBrain();
+    </script>
+</body>
+</html>
